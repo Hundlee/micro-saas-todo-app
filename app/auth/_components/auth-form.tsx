@@ -1,15 +1,36 @@
+"use client";
+
 import { Button } from "@/app/_components/ui/button";
 import {
     Card,
-    CardContent,
     CardDescription,
     CardHeader,
     CardTitle,
 } from "@/app/_components/ui/card";
 import { Input } from "@/app/_components/ui/input";
 import { Label } from "@/app/_components/ui/label";
+import { useForm } from "react-hook-form";
+import { signIn } from "next-auth/react";
+import { toast } from "@/app/_components/ui/use-toast";
 
 export default function AuthForm() {
+    const form = useForm();
+
+    const handleSubmit = form.handleSubmit(async (data) => {
+        try {
+            await signIn("email", { email: data.email, redirect: false });
+            toast({
+                title: "Magic Link Sent",
+                description: "Check your email for the magic link to login",
+            });
+        } catch (error) {
+            toast({
+                title: "Error",
+                description: "An error ocurred. Please try again",
+            });
+        }
+    });
+
     return (
         <Card className="mx-auto max-w-sm">
             <CardHeader className="space-y-1">
@@ -18,7 +39,7 @@ export default function AuthForm() {
                     Enter your email below to login to your account
                 </CardDescription>
             </CardHeader>
-            <CardContent className="space-y-4">
+            <form className="space-y-4 p-5" onSubmit={handleSubmit}>
                 <div className="space-y-2">
                     <Label htmlFor="email">Email</Label>
                     <Input
@@ -26,10 +47,13 @@ export default function AuthForm() {
                         placeholder="m@example.com"
                         required
                         type="email"
+                        {...form.register("email")}
                     />
                 </div>
-                <Button className="w-full">Send Magic Link</Button>
-            </CardContent>
+                <Button className="w-full p-5" type="submit">
+                    Send Magic Link
+                </Button>
+            </form>
         </Card>
     );
 }
