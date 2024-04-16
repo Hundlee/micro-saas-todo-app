@@ -1,16 +1,17 @@
 "use client";
 
 import {
-    Sidebar,
-    SidebarFooter,
-    SidebarHeader,
-    SidebarMain,
-    SidebarNav,
-    SidebarNavHeader,
-    SidebarNavHeaderTitle,
-    SidebarNavLink,
-    SidebarNavMain,
-} from "@/app/_components/_dashboard/sidebar";
+    DashboardSidebar,
+    DashboardSidebarFooter,
+    DashboardSidebarHeader,
+    DashboardSidebarHeaderTitle,
+    DashboardSidebarMain,
+    DashboardSidebarNav,
+    DashboardSidebarNavHeader,
+    DashboardSidebarNavHeaderTitle,
+    DashboardSidebarNavLink,
+    DashboardSidebarNavMain,
+} from "@/app/_components/_dashboard/dashBoardSidebar";
 import { HomeIcon, Settings2 } from "lucide-react";
 import { usePathname } from "next/navigation";
 import { UserDropdown } from "./user-dropdown";
@@ -24,44 +25,52 @@ export function MainSideBar() {
     };
 
     return (
-        <Sidebar>
-            <SidebarHeader>
+        <DashboardSidebar>
+            <DashboardSidebarHeader className="flex">
                 <Logo />
-            </SidebarHeader>
-            <SidebarMain className="flex flex-col flex-grow">
-                <SidebarNav>
-                    <SidebarNavMain>
-                        <SidebarNavLink href="/app" active={isActive("/app")}>
+                <DashboardSidebarHeaderTitle className="ml-3">
+                    Todo-App
+                </DashboardSidebarHeaderTitle>
+            </DashboardSidebarHeader>
+            <DashboardSidebarMain className="flex flex-col flex-grow">
+                <DashboardSidebarNav>
+                    <DashboardSidebarNavMain>
+                        <DashboardSidebarNavLink
+                            href="/app"
+                            active={isActive("/app")}
+                        >
                             <HomeIcon size={18} className="mr-3" />
                             Tarefas
-                        </SidebarNavLink>
-                        <SidebarNavLink
+                        </DashboardSidebarNavLink>
+                        <DashboardSidebarNavLink
                             href="/app/settings"
                             active={isActive("/app/settings")}
                         >
                             <Settings2 size={18} className="mr-3" />
                             Configurações
-                        </SidebarNavLink>
-                    </SidebarNavMain>
-                </SidebarNav>
+                        </DashboardSidebarNavLink>
+                    </DashboardSidebarNavMain>
+                </DashboardSidebarNav>
 
-                <SidebarNav className="mt-auto">
-                    <SidebarNavHeader>
-                        <SidebarNavHeaderTitle>
+                <DashboardSidebarNav className="mt-auto">
+                    <DashboardSidebarNavHeader>
+                        <DashboardSidebarNavHeaderTitle>
                             Links extras
-                        </SidebarNavHeaderTitle>
-                    </SidebarNavHeader>
-                    <SidebarNavMain>
-                        <SidebarNavLink href="/">
+                        </DashboardSidebarNavHeaderTitle>
+                    </DashboardSidebarNavHeader>
+                    <DashboardSidebarNavMain>
+                        <DashboardSidebarNavLink href="/">
                             Precisa de ajuda?
-                        </SidebarNavLink>
-                        <SidebarNavLink href="/">Site</SidebarNavLink>
-                    </SidebarNavMain>
-                </SidebarNav>
-            </SidebarMain>
-            <SidebarFooter>
+                        </DashboardSidebarNavLink>
+                        <DashboardSidebarNavLink href="/">
+                            Site
+                        </DashboardSidebarNavLink>
+                    </DashboardSidebarNavMain>
+                </DashboardSidebarNav>
+            </DashboardSidebarMain>
+            <DashboardSidebarFooter>
                 <UserDropdown />
-            </SidebarFooter>
-        </Sidebar>
+            </DashboardSidebarFooter>
+        </DashboardSidebar>
     );
 }
