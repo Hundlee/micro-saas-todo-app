@@ -13,6 +13,8 @@ import {
 } from "@/app/_components/_dashboard/sidebar";
 import { HomeIcon, Settings2 } from "lucide-react";
 import { usePathname } from "next/navigation";
+import { UserDropdown } from "./user-dropdown";
+import { Logo } from "@/app/_components/logo";
 
 export function MainSideBar() {
     const pathname = usePathname();
@@ -24,7 +26,7 @@ export function MainSideBar() {
     return (
         <Sidebar>
             <SidebarHeader>
-                <h1></h1>
+                <Logo />
             </SidebarHeader>
             <SidebarMain className="flex flex-col flex-grow">
                 <SidebarNav>
@@ -58,7 +60,7 @@ export function MainSideBar() {
                 </SidebarNav>
             </SidebarMain>
             <SidebarFooter>
-                <h1>User</h1>
+                <UserDropdown />
             </SidebarFooter>
         </Sidebar>
     );
