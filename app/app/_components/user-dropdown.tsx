@@ -31,10 +31,13 @@ export function UserDropdown({ user }: UserDropdownProps) {
             <DropdownMenuTrigger asChild>
                 <Button
                     variant="link"
-                    className="relative h-8 flex items-center justify-between w-full !px-0 space-x-2"
+                    className="relative h-8 flex items-center justify-between w-full !px-0 space-x-2 hover:no-underline"
                 >
                     <Avatar className="h-8 w-8">
-                        <AvatarImage src={user.image as string} alt={user.name as string} />
+                        <AvatarImage
+                            src={user.image as string}
+                            alt={user.name as string}
+                        />
                         <AvatarFallback>U</AvatarFallback>
                     </Avatar>
 
