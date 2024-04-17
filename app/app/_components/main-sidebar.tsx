@@ -16,8 +16,13 @@ import { HomeIcon, Settings2 } from "lucide-react";
 import { usePathname } from "next/navigation";
 import { UserDropdown } from "./user-dropdown";
 import { Logo } from "@/app/_components/logo";
+import { Session } from "next-auth";
 
-export function MainSideBar() {
+type MainSidebarProps = {
+    user: Session["user"];
+};
+
+export function MainSideBar({ user }: MainSidebarProps) {
     const pathname = usePathname();
 
     const isActive = (path: string) => {
@@ -69,7 +74,7 @@ export function MainSideBar() {
                 </DashboardSidebarNav>
             </DashboardSidebarMain>
             <DashboardSidebarFooter>
-                <UserDropdown />
+                <UserDropdown user={user} />
             </DashboardSidebarFooter>
         </DashboardSidebar>
     );
