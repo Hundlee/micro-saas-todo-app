@@ -45,14 +45,14 @@ export function MainSideBar({ user }: MainSidebarProps) {
                             active={isActive("/app")}
                         >
                             <HomeIcon size={18} className="mr-3" />
-                            Tarefas
+                            Todos
                         </DashboardSidebarNavLink>
                         <DashboardSidebarNavLink
                             href="/app/settings"
                             active={isActive("/app/settings")}
                         >
                             <Settings2 size={18} className="mr-3" />
-                            Configurações
+                            Settings
                         </DashboardSidebarNavLink>
                     </DashboardSidebarNavMain>
                 </DashboardSidebarNav>
@@ -60,12 +60,12 @@ export function MainSideBar({ user }: MainSidebarProps) {
                 <DashboardSidebarNav className="mt-auto">
                     <DashboardSidebarNavHeader>
                         <DashboardSidebarNavHeaderTitle>
-                            Links extras
+                            Extra Links
                         </DashboardSidebarNavHeaderTitle>
                     </DashboardSidebarNavHeader>
                     <DashboardSidebarNavMain>
                         <DashboardSidebarNavLink href="/">
-                            Precisa de ajuda?
+                            Need help?
                         </DashboardSidebarNavLink>
                         <DashboardSidebarNavLink href="/">
                             Site

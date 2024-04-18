@@ -70,7 +70,7 @@ export function UserDropdown({ user }: UserDropdownProps) {
                 <DropdownMenuGroup>
                     <DropdownMenuItem className="flex items-center">
                         <Settings2 size={18} className="mr-3" />
-                        Configurações
+                        Settings
                     </DropdownMenuItem>
                     <DropdownMenuItem>
                         <RocketIcon size={18} className="mr-3" />
