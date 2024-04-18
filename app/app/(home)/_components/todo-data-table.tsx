@@ -35,54 +35,18 @@ import {
 import { Badge } from "@/app/_components/ui/badge";
 import { Todo } from "../types";
 
-const data: Todo[] = [
-    {
-        id: "1",
-        title: "Complete React Table tutorial",
-        createdAt: new Date("2023-09-01"),
-        updatedAt: new Date("2023-09-02"),
-    },
-    {
-        id: "2",
-        title: "Write blog post about React Hooks",
-        createdAt: new Date("2023-08-25"),
-        updatedAt: new Date("2023-08-26"),
-    },
-    {
-        id: "3",
-        title: "Refactor backend authentication code",
-        createdAt: new Date("2023-08-20"),
-        updatedAt: new Date("2023-08-21"),
-        finishedAt: new Date("2023-08-22"),
-    },
-    {
-        id: "4",
-        title: "Design new feature UI mockups",
-        createdAt: new Date("2023-09-05"),
-        updatedAt: new Date("2023-09-06"),
-    },
-    {
-        id: "5",
-        title: "Update project documentation",
-        createdAt: new Date("2023-09-10"),
-        updatedAt: new Date("2023-09-11"),
-    },
-];
-
 export const columns: ColumnDef<Todo>[] = [
     {
         accessorKey: "status",
         header: "Status",
         cell: ({ row }) => {
-            const { finishedAt } = row.original;
-            const status: "Feito" | "Pendente" = finishedAt
-                ? "Feito"
-                : "Pendente";
-            const statusVariant: "outline" | "secondary" = finishedAt
+            const { doneAt } = row.original;
+            const status: "done" | "waiting" = doneAt ? "done" : "waiting";
+            const variant: "outline" | "secondary" = doneAt
                 ? "outline"
                 : "secondary";
 
-            return <Badge variant={statusVariant}>{status}</Badge>;
+            return <Badge variant={variant}>{status}</Badge>;
         },
     },
     {
@@ -96,7 +60,7 @@ export const columns: ColumnDef<Todo>[] = [
                     }
                     className="hover:no-underline"
                 >
-                    Título
+                    Title
                     <ArrowUpDown className="ml-2 h-4 w-4" />
                 </Button>
             );
@@ -105,7 +69,7 @@ export const columns: ColumnDef<Todo>[] = [
     },
     {
         accessorKey: "createdAt",
-        header: () => <div className="text-right">Criado em</div>,
+        header: () => <div className="text-right">createdAt</div>,
         cell: ({ row }) => {
             return (
                 <div className="text-right font-medium">
@@ -148,7 +112,11 @@ export const columns: ColumnDef<Todo>[] = [
     },
 ];
 
-export function TodoDataTable() {
+type TodoDataTable = {
+    data: Todo[];
+};
+
+export function TodoDataTable({ data }: TodoDataTable) {
     const [sorting, setSorting] = React.useState<SortingState>([]);
     const [columnFilters, setColumnFilters] =
         React.useState<ColumnFiltersState>([]);
