@@ -17,7 +17,7 @@ export default async function Page() {
     return (
         <DashboardPage>
             <DashboardPageHeader>
-                <DashboardPageHeaderTitle>Tarefas</DashboardPageHeaderTitle>
+                <DashboardPageHeaderTitle>Todos</DashboardPageHeaderTitle>
                 <DashboardPageHeaderNav>
                     <TodoUpsertSheet>
                         <Button variant="outline" size="sm">
