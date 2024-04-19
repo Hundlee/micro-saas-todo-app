@@ -16,6 +16,7 @@ import {
 import { LogOutIcon, RocketIcon, Settings2 } from "lucide-react";
 import { Session } from "next-auth";
 import { signOut } from "next-auth/react";
+import Link from "next/link";
 
 type UserDropdownProps = {
     user: Session["user"];
@@ -68,13 +69,23 @@ export function UserDropdown({ user }: UserDropdownProps) {
                 </DropdownMenuLabel>
                 <DropdownMenuSeparator />
                 <DropdownMenuGroup>
-                    <DropdownMenuItem className="flex items-center">
-                        <Settings2 size={18} className="mr-3" />
-                        Settings
+                    <DropdownMenuItem>
+                        <Link
+                            href={"/app/settings"}
+                            className="flex items-center"
+                        >
+                            <Settings2 size={18} className="mr-3" />
+                            Settings
+                        </Link>
                     </DropdownMenuItem>
                     <DropdownMenuItem>
-                        <RocketIcon size={18} className="mr-3" />
-                        Upgrade
+                        <Link
+                            href={"/app/settings/billing"}
+                            className="flex items-center"
+                        >
+                            <RocketIcon size={18} className="mr-3" />
+                            Upgrade
+                        </Link>
                     </DropdownMenuItem>
                 </DropdownMenuGroup>
                 <DropdownMenuSeparator />
