@@ -10,11 +10,11 @@ import {
 import { Progress } from "@/app/_components/ui/progress";
 import { createCheckoutSessionAction } from "./actions";
 import { auth } from "@/app/_services/auth";
-import { getPlanByPrice } from "@/app/_services/stripe";
+import { getUserCurrentPlan } from "@/app/_services/stripe";
 
 export default async function Page() {
     const session = await auth();
-    const plan = getPlanByPrice(session?.user.stripePriceId as string);
+    const plan = await getUserCurrentPlan(session?.user.id as string);
 
     return (
         <form action={createCheckoutSessionAction}>
@@ -23,9 +23,7 @@ export default async function Page() {
                     <CardTitle>Plan Usage</CardTitle>
                     <CardDescription>
                         You are currently on the{" "}
-                        <span className="uppercase font-bold">
-                            {(await plan).name}
-                        </span>{" "}
+                        <span className="uppercase font-bold">{plan.name}</span>{" "}
                         plan.
                     </CardDescription>
                 </CardHeader>
@@ -33,14 +31,15 @@ export default async function Page() {
                     <div className="space-y-2">
                         <header className="flex items-center justify-between">
                             <span className="text-muted-foreground text-sm">
-                                1/{(await plan).quota.TASKS}
+                                {plan.quota.TASKS.current}/
+                                {plan.quota.TASKS.available}
                             </span>
                             <span className="text-muted-foreground text-sm">
-                                20%
+                                {plan.quota.TASKS.usage}%
                             </span>
                         </header>
                         <main>
-                            <Progress value={20} />
+                            <Progress value={plan.quota.TASKS.usage} />
                         </main>
                     </div>
                 </CardContent>
