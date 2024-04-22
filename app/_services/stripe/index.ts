@@ -1,7 +1,6 @@
 import { config } from "@/app/config";
 import Stripe from "stripe";
 import { prisma } from "../database";
-import { Item } from "@radix-ui/react-accordion";
 
 export const stripe = new Stripe(config.stripe.secretKey || "", {
     apiVersion: "2024-04-10",
@@ -93,6 +92,7 @@ export const createCheckoutSession = async (
         throw new Error(`Error to create checkout session`);
     }
 };
+
 export const handleProcessWebhookCheckout = async (event: {
     object: Stripe.Checkout.Session;
 }) => {
@@ -132,12 +132,14 @@ export const handleProcessWebhookCheckout = async (event: {
         },
     });
 };
+
 export const handleProcessWebhookUpdatedSubscription = async (event: {
     object: Stripe.Subscription;
 }) => {
     const stripeSubscriptionId = event.object.id as string;
     const stripeCustomerId = event.object.customer as string;
     const stripeSubscriptionStatus = event.object.status;
+    const stripePriceId = event.object.items.data[0].price.id;
 
     const userExists = await prisma.user.findFirst({
         where: {
@@ -160,6 +162,36 @@ export const handleProcessWebhookUpdatedSubscription = async (event: {
             stripeCustomerId,
             stripeSubscriptionId,
             stripeSubscriptionStatus,
+            stripePriceId,
         },
     });
+};
+
+type Plan = {
+    priceId: string;
+    quota: {
+        TASKS: number;
+    };
+};
+
+type Plans = {
+    [key: string]: Plan;
+};
+
+export const getPlanByPrice = async (priceId: string) => {
+    const plans: Plans = config.stripe.plans;
+
+    const planKey = Object.keys(plans).find(
+        (key) => plans[key].priceId === priceId
+    ) as keyof Plans | undefined;
+
+    const plan = planKey ? plans[planKey] : null;
+    if (!plan) {
+        throw new Error(`Plan not found for priceId: ${priceId}`);
+    }
+
+    return {
+        name: planKey,
+        quota: plan.quota,
+    };
 };
