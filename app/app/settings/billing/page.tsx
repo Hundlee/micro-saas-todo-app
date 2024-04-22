@@ -9,23 +9,31 @@ import {
 } from "@/app/_components/ui/card";
 import { Progress } from "@/app/_components/ui/progress";
 import { createCheckoutSessionAction } from "./actions";
+import { auth } from "@/app/_services/auth";
+import { getPlanByPrice } from "@/app/_services/stripe";
 
 export default async function Page() {
+    const session = await auth();
+    const plan = getPlanByPrice(session?.user.stripePriceId as string);
+
     return (
         <form action={createCheckoutSessionAction}>
             <Card>
                 <CardHeader className="border-b border-border">
                     <CardTitle>Plan Usage</CardTitle>
                     <CardDescription>
-                        You are currently on the [current_plan]. Curren billing
-                        cycle: [next_due_date].
+                        You are currently on the{" "}
+                        <span className="uppercase font-bold">
+                            {(await plan).name}
+                        </span>{" "}
+                        plan.
                     </CardDescription>
                 </CardHeader>
                 <CardContent className="pt-6">
                     <div className="space-y-2">
                         <header className="flex items-center justify-between">
                             <span className="text-muted-foreground text-sm">
-                                1/5
+                                1/{(await plan).quota.TASKS}
                             </span>
                             <span className="text-muted-foreground text-sm">
                                 20%
