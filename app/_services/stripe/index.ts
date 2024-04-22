@@ -1,5 +1,5 @@
-import { config } from "@/app/config";
 import Stripe from "stripe";
+import { config } from "@/app/config";
 import { prisma } from "../database";
 
 export const stripe = new Stripe(config.stripe.secretKey || "", {
@@ -193,5 +193,42 @@ export const getPlanByPrice = async (priceId: string) => {
     return {
         name: planKey,
         quota: plan.quota,
+    };
+};
+
+export const getUserCurrentPlan = async (userId: string) => {
+    const user = await prisma.user.findUnique({
+        where: {
+            id: userId,
+        },
+        select: {
+            stripePriceId: true,
+        },
+    });
+
+    if (!user || !user.stripePriceId) {
+        throw new Error("User or user stripePriceId not found");
+    }
+
+    const plan = await getPlanByPrice(user.stripePriceId);
+    const tasksCount = await prisma.todo.count({
+        where: {
+            userId,
+        },
+    });
+
+    const availableTasks = plan.quota.TASKS;
+    const currentTasks = tasksCount;
+    const usage = (currentTasks / availableTasks) * 100;
+
+    return {
+        name: plan.name,
+        quota: {
+            TASKS: {
+                available: availableTasks,
+                current: currentTasks,
+                usage,
+            },
+        },
     };
 };
