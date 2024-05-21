@@ -58,7 +58,7 @@ export function ProfileForm({ defaultValues }: ProfileFormProps) {
                     <CardHeader>
                         <CardTitle>Profile Name</CardTitle>
                         <CardDescription>
-                            Enter your name as you'd like it to appear on your
+                            Enter your name as you did like it to appear on your
                             profile.
                         </CardDescription>
                     </CardHeader>
