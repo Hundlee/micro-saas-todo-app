@@ -10,21 +10,39 @@ import { TodoDataTable } from "./_components/todo-data-table";
 import { TodoUpsertSheet } from "./_components/todo-upsert-sheet";
 import { PlusIcon } from "lucide-react";
 import { getUserTodos } from "./actions";
+import { auth } from "@/app/_services/auth";
+import { canAddTask } from "./_helpers/canAddTask";
+import Link from "next/link";
 
 export default async function Page() {
     const todos = await getUserTodos();
+    const session = await auth();
+
+    if (!session) {
+        return;
+    }
+
+    const userCanAddTask = await canAddTask(session.user.id);
 
     return (
         <DashboardPage>
-            <DashboardPageHeader>
+            <DashboardPageHeader className="h-[80px]">
                 <DashboardPageHeaderTitle>Todos</DashboardPageHeaderTitle>
                 <DashboardPageHeaderNav>
-                    <TodoUpsertSheet>
-                        <Button variant="outline" size="sm">
-                            <PlusIcon className="w-4 h-4 mr-3" />
-                            Add todo
+                    {userCanAddTask ? (
+                        <TodoUpsertSheet>
+                            <Button variant="outline" size="sm">
+                                <PlusIcon className="w-4 h-4 mr-3" />
+                                Add todo
+                            </Button>
+                        </TodoUpsertSheet>
+                    ) : (
+                        <Button>
+                            <Link href="/app/settings/billing">
+                                Update Plan
+                            </Link>
                         </Button>
-                    </TodoUpsertSheet>
+                    )}
                 </DashboardPageHeaderNav>
             </DashboardPageHeader>
             <DashboardPageMain>
