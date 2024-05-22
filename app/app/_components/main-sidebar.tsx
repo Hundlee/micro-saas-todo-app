@@ -31,7 +31,7 @@ export function MainSideBar({ user }: MainSidebarProps) {
 
     return (
         <DashboardSidebar>
-            <DashboardSidebarHeader className="flex">
+            <DashboardSidebarHeader className="flex items-center h-[80px]">
                 <Logo />
                 <DashboardSidebarHeaderTitle className="ml-3">
                     Todo-App
