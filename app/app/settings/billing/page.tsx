@@ -43,10 +43,18 @@ export default async function Page() {
                         </main>
                     </div>
                 </CardContent>
-                <CardFooter className="flex items-center justify-between border-t border-border pt-6">
-                    <span>for a higher limit subscribe to the PRO plan</span>
-                    <Button type="submit">Upgrade for $9/month</Button>
-                </CardFooter>
+                {plan.quota.TASKS.available > 10 ? (
+                    <CardFooter className="flex items-center justify-between border-t border-border pt-6">
+                        <span>Thanks for the sign Pro plan</span>
+                    </CardFooter>
+                ) : (
+                    <CardFooter className="flex items-center justify-between border-t border-border pt-6">
+                        <span>
+                            for a higher limit subscribe to the PRO plan
+                        </span>
+                        <Button type="submit">Upgrade for $9/month</Button>
+                    </CardFooter>
+                )}
             </Card>
         </form>
     );
