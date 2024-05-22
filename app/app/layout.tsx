@@ -6,6 +6,10 @@ import { auth } from "../_services/auth";
 export default async function Layout({ children }: PropsWithChildren) {
     const session = await auth();
 
+    if (!session) {
+        return;
+    }
+
     return (
         <div className="grid grid-cols-[20rem_1fr]">
             <MainSideBar user={session?.user} />
