@@ -12,6 +12,7 @@ import { Label } from "@/app/_components/ui/label";
 import { useForm } from "react-hook-form";
 import { signIn } from "next-auth/react";
 import { toast } from "@/app/_components/ui/use-toast";
+import { Separator } from "@/app/_components/ui/separator";
 
 export default function AuthForm() {
     const form = useForm();
@@ -30,6 +31,10 @@ export default function AuthForm() {
             });
         }
     });
+
+    const handleLogin = async () => {
+        await signIn("google");
+    };
 
     return (
         <Card className="mx-auto max-w-sm">
@@ -60,6 +65,16 @@ export default function AuthForm() {
                         : "Send Magic Link"}
                 </Button>
             </form>
+
+            <div className="pb-5">
+                <Separator />
+            </div>
+
+            <div className="px-5 pb-5">
+                <Button className="w-full" onClick={handleLogin}>
+                    Login with Google
+                </Button>
+            </div>
         </Card>
     );
 }
