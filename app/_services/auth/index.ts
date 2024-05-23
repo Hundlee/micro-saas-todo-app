@@ -3,6 +3,7 @@ import EmailProvider from "next-auth/providers/nodemailer";
 import { PrismaAdapter } from "@auth/prisma-adapter";
 import { prisma } from "../database";
 import { createStripeCustomer } from "../stripe";
+import GoogleProvider from "next-auth/providers/google";
 
 export const {
     handlers: { GET, POST },
@@ -20,6 +21,10 @@ export const {
         EmailProvider({
             server: process.env.EMAIL_SERVER,
             from: process.env.EMAIL_FROM,
+        }),
+        GoogleProvider({
+            clientId: process.env.GOOGLE_CLIENT_ID,
+            clientSecret: process.env.GOOGLE_CLIENT_SECRET,
         }),
     ],
     events: {
