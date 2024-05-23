@@ -39,7 +39,7 @@ export default async function Page() {
                     ) : (
                         <Button>
                             <Link href="/app/settings/billing">
-                                Update Plan
+                                Upgrade Plan
                             </Link>
                         </Button>
                     )}
