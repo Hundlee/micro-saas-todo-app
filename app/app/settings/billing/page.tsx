@@ -35,7 +35,7 @@ export default async function Page() {
                                 {plan.quota.TASKS.available}
                             </span>
                             <span className="text-muted-foreground text-sm">
-                                {plan.quota.TASKS.usage}%
+                                {plan.quota.TASKS.usage.toFixed(1)}%
                             </span>
                         </header>
                         <main>
