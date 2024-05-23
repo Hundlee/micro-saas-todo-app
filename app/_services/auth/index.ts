@@ -35,5 +35,16 @@ export const {
             });
         },
     },
+    callbacks: {
+        async session({ session, user }) {
+            session.user = {
+                ...session.user,
+                id: user.id,
+                emailVerified: user.emailVerified,
+            };
+
+            return session;
+        },
+    },
     secret: process.env.SECRET,
 });
