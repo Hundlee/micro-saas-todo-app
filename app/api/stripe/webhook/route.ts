@@ -17,6 +17,7 @@ export async function POST(req: Request) {
             body,
             signature,
             process.env.STRIPE_WEBHOOK_SECRET as string
+            // process.env.STRIPE_WEBHOOK_SECRET as string
         );
     } catch (error: any) {
         console.error(`Webhook Error: ${error.message}`);
